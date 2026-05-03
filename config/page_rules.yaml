@@ -1,0 +1,39 @@
+pages:
+  page1:
+    type: date_page
+    pattern: "[A-Z]{3}\\s+20[0-9]{2}"
+
+  page3_4:
+    title: "Edge Products Qualification Gates"
+    headers:
+      - Product
+      - AVAILABLE ONLY
+      - QUALIFICATION GATE
+      - WHAT TO DO
+      - COMMENTS
+
+  page5:
+    title: "Products NOT FOR SALE in EMEA"
+    headers:
+      - Product
+      - Qualification Gate
+      - What to Do
+      - Notes
+      - Exception Process Eligible
+
+  page6:
+    title: "International – Tiered Focus Markets (FY26)"
+    note: "partial logic"
+
+  page7:
+    title: "Relationship between SKU’s and Editions"
+    include_all_text: true
+
+  page8:
+    title: "SuiteSuccess Edition Availability - EMEA"
+    legend:
+      "#00FF00": "localized"
+      "#FF0000": "UK edition"
+      "#FFFF00": "non_localized"
+      "#333333": "not_available"
+    special_note: "* Through CS implementation Only"
