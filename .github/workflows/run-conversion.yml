@@ -1,0 +1,47 @@
+name: Run PDF to JSON
+
+on:
+  workflow_dispatch:
+    inputs:
+      pdf_url:
+        description: "Optional URL to PDF"
+        required: false
+      pdf_path:
+        description: "Path in repo (e.g. input/file.pdf)"
+        required: false
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Get PDF
+        run: |
+          if [ ! -z "${{ github.event.inputs.pdf_url }}" ]; then
+            curl -L ${{ github.event.inputs.pdf_url }} -o input.pdf
+          elif [ ! -z "${{ github.event.inputs.pdf_path }}" ]; then
+            cp ${{ github.event.inputs.pdf_path }} input.pdf
+          else
+            echo "No PDF provided" && exit 1
+          fi
+
+      - name: Run conversion
+        run: |
+          python pdf_to_json.py input.pdf config/page_rules.yaml output.json
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: json-output
+          path: output.json
